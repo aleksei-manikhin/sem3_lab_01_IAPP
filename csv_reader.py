@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import List, Tuple, Union
 
 
-def read_csv(path: Union[str, Path]) -> Tuple[List[str], List[List[str]]]:
+def _validate_path(path: Union[str, Path]) -> Path:
     if isinstance(path, str) and not path.strip():
         raise ValueError("Путь к файлу не указан. Выберите CSV-файл.")
 
@@ -19,6 +19,12 @@ def read_csv(path: Union[str, Path]) -> Tuple[List[str], List[List[str]]]:
 
     if file_path.suffix.lower() != ".csv":
         raise ValueError("Выберите файл с расширением .csv.")
+
+    return file_path
+
+
+def read_csv(path: Union[str, Path]) -> Tuple[List[str], List[List[str]]]:
+    file_path = _validate_path(path)
 
     with file_path.open() as file:
         reader = csv.reader(file, delimiter=",", strict=True)

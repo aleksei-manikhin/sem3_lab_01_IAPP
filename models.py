@@ -18,7 +18,7 @@ NUMERIC_COLUMNS = tuple(
     name for name in COLUMN_NAMES if name != REGION_COLUMN
 )
 
-CellValue = Union[str, int, float]
+CellValue = Union[str, int, float, None]
 DataRow = Dict[str, CellValue]
 Dataset = List[DataRow]
 Statistics = Dict[str, float]
