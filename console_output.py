@@ -12,8 +12,9 @@ def _style(text: str, *styles: str) -> str:
     return "".join(styles) + text + RESET
 
 
-def show_file_menu() -> None:
-    print("\nКак открыть CSV-файл?")
+def show_file_menu(replacing: bool = False) -> None:
+    title = "Как открыть новый CSV-файл?" if replacing else "Как открыть CSV-файл?"
+    print("\n" + title)
     print("1. Ввести путь вручную")
     print("2. Выбрать файл через проводник")
     print("0. Завершить программу")

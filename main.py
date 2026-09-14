@@ -6,7 +6,7 @@ import parser
 
 
 def _select_file(state: dict) -> str:
-    console_output.show_file_menu()
+    console_output.show_file_menu(bool(state))
     method = console_input.read_file_method()
     if method == 0:
         return "exit"
