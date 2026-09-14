@@ -1,14 +1,7 @@
 import math
-from typing import List, Optional
+import typing
 
-from models import (
-    COLUMN_NAMES,
-    REGION_COLUMN,
-    YEAR_COLUMN,
-    CellValue,
-    DataRow,
-    Dataset,
-)
+import models
 
 
 def _parse_region(value: str) -> str:
@@ -24,7 +17,7 @@ def _parse_year(value: str) -> int:
         raise ValueError("Год должен быть целым числом.") from error
 
 
-def _parse_number(value: str) -> Optional[float]:
+def _parse_number(value: str) -> typing.Optional[float]:
     if not value:
         return None
 
@@ -39,26 +32,31 @@ def _parse_number(value: str) -> Optional[float]:
     return number
 
 
-def _parse_cell(value: str, column: str) -> CellValue:
+def _parse_cell(value: str, column: str) -> models.CellValue:
     value = value.strip()
 
-    if column == REGION_COLUMN:
+    if column == models.REGION_COLUMN:
         return _parse_region(value)
-    if column == YEAR_COLUMN:
+    if column == models.YEAR_COLUMN:
         return _parse_year(value)
     return _parse_number(value)
 
 
-def _parse_header(header: List[str]) -> List[str]:
+def _parse_header(header: typing.List[str]) -> typing.List[str]:
     columns = [name.strip() for name in header]
 
-    if len(columns) != len(COLUMN_NAMES) or set(columns) != set(COLUMN_NAMES):
+    if (
+        len(columns) != len(models.COLUMN_NAMES)
+        or set(columns) != set(models.COLUMN_NAMES)
+    ):
         raise ValueError("Названия или количество колонок не соответствуют формату.")
 
     return columns
 
 
-def _parse_row(columns: List[str], row: List[str]) -> DataRow:
+def _parse_row(
+    columns: typing.List[str], row: typing.List[str]
+) -> models.DataRow:
     if len(row) != len(columns):
         raise ValueError("Количество ячеек в строке не совпадает с заголовком.")
 
@@ -68,7 +66,9 @@ def _parse_row(columns: List[str], row: List[str]) -> DataRow:
     }
 
 
-def parse_csv(header: List[str], rows: List[List[str]]) -> Dataset:
+def parse_csv(
+    header: typing.List[str], rows: typing.List[typing.List[str]]
+) -> models.Dataset:
     columns = _parse_header(header)
     dataset = [_parse_row(columns, row) for row in rows if row]
 

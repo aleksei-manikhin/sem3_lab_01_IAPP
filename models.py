@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple, Union
+import typing
 
 
 YEAR_COLUMN = "year"
@@ -18,8 +18,8 @@ NUMERIC_COLUMNS = tuple(
     name for name in COLUMN_NAMES if name != REGION_COLUMN
 )
 
-CellValue = Union[str, int, float, None]
-DataRow = Dict[str, CellValue]
-Dataset = List[DataRow]
-Statistics = Dict[str, float]
-Percentiles = List[Tuple[int, float]]
+CellValue = typing.Union[str, int, float, None]
+DataRow = typing.Dict[str, CellValue]
+Dataset = typing.List[DataRow]
+Statistics = typing.Dict[str, float]
+Percentiles = typing.List[typing.Tuple[int, float]]

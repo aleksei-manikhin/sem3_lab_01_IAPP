@@ -1,14 +1,14 @@
 import csv
+import pathlib
 import stat
-from pathlib import Path
-from typing import List, Tuple, Union
+import typing
 
 
-def _validate_path(path: Union[str, Path]) -> Path:
+def _validate_path(path: typing.Union[str, pathlib.Path]) -> pathlib.Path:
     if isinstance(path, str) and not path.strip():
         raise ValueError("Путь к файлу не указан. Выберите CSV-файл.")
 
-    file_path = Path(path)
+    file_path = pathlib.Path(path)
     file_mode = file_path.stat().st_mode
 
     if stat.S_ISDIR(file_mode):
@@ -23,7 +23,9 @@ def _validate_path(path: Union[str, Path]) -> Path:
     return file_path
 
 
-def read_csv(path: Union[str, Path]) -> Tuple[List[str], List[List[str]]]:
+def read_csv(
+    path: typing.Union[str, pathlib.Path]
+) -> typing.Tuple[typing.List[str], typing.List[typing.List[str]]]:
     file_path = _validate_path(path)
 
     with file_path.open() as file:
